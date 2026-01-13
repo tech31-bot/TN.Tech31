@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Editor | Voice-to-Visual Sync</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS will be added here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-film"></i>
+                <h1>AI Video Editor</h1>
+            </div>
+            <p class="tagline">Transform voice narration into cinematic videos with AI-powered image matching</p>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-box voice-upload">
+                    <h2><i class="fas fa-microphone"></i> Upload Voice Narration</h2>
+                    <p class="upload-info">Supports MP3, WAV, M4A (Max 2 hours)</p>
+                    <div class="drop-area" id="voiceDropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop your voice file here</p>
+                        <p class="file-size">or click to browse (max 500MB)</p>
+                        <input type="file" id="voiceInput" accept="audio/*" hidden>
+                    </div>
+                    <div class="audio-preview" id="audioPreview">
+                        <!-- Audio preview will appear here -->
+                    </div>
+                </div>
+
+                <div class="upload-box image-upload">
+                    <h2><i class="fas fa-images"></i> Upload Images (Optional)</h2>
+                    <p class="upload-info">AI will use these or generate relevant images (Unlimited uploads)</p>
+                    <div class="drop-area" id="imageDropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop your images here</p>
+                        <p class="file-size">or click to browse (JPG, PNG, SVG)</p>
+                        <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                    </div>
+                    <div class="image-preview" id="imagePreview">
+                        <!-- Image previews will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="language-selector">
+                    <label for="language"><i class="fas fa-language"></i> Narration Language:</label>
+                    <select id="language">
+                        <option value="auto">Auto-detect (Hindi/Hinglish/English)</option>
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="hinglish">Hinglish</option>
+                    </select>
+                </div>
+
+                <div class="style-controls">
+                    <h3><i class="fas fa-palette"></i> Video Style</h3>
+                    <div class="style-options">
+                        <div class="style-option active" data-style="cinematic">
+                            <i class="fas fa-theater-masks"></i>
+                            <span>Cinematic</span>
+                        </div>
+                        <div class="style-option" data-style="informative">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Informative</span>
+                        </div>
+                        <div class="style-option" data-style="dramatic">
+                            <i class="fas fa-fire"></i>
+                            <span>Dramatic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="generate-btn" id="generateBtn">
+                    <i class="fas fa-magic"></i> Generate AI Video
+                </button>
+            </div>
+
+            <div class="processing-section" id="processingSection">
+                <h2><i class="fas fa-cogs"></i> AI Processing Steps</h2>
+                <div class="processing-steps">
+                    <div class="step" id="step1">
+                        <div class="step-icon"><i class="fas fa-volume-up"></i></div>
+                        <div class="step-content">
+                            <h3>1. Analyzing Narration</h3>
+                            <p>Splitting into logical segments (1-2 sentences each)</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step" id="step2">
+                        <div class="step-icon"><i class="fas fa-brain"></i></div>
+                        <div class="step-content">
+                            <h3>2. Identifying Subjects & Emotions</h3>
+                            <p>Detecting main subject, emotion, and action for each segment</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step" id="step3">
+                        <div class="step-icon"><i class="fas fa-image"></i></div>
+                        <div class="step-content">
+                            <h3>3. Matching Images</h3>
+                            <p>Selecting highly relevant images for each narration segment</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step" id="step4">
+                        <div class="step-icon"><i class="fas fa-film"></i></div>
+                        <div class="step-content">
+                            <h3>4. Creating Timeline</h3>
+                            <p>Placing images in correct sequence with perfect timing sync</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step" id="step5">
+                        <div class="step-icon"><i class="fas fa-play-circle"></i></div>
+                        <div class="step-content">
+                            <h3>5. Finalizing Video</h3>
+                            <p>Applying cinematic framing, smooth transitions, and 16:9 ratio</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-section" id="outputSection">
+                <h2><i class="fas fa-video"></i> Generated Video Preview</h2>
+                <div class="video-container">
+                    <div class="video-player">
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <p>Your AI-generated video will appear here</p>
+                        </div>
+                        <div class="video-controls">
+                            <div class="timeline">
+                                <div class="timeline-bar">
+                                    <div class="timeline-progress"></div>
+                                    <div class="timeline-marker"></div>
+                                </div>
+                                <div class="timeline-images" id="timelineImages">
+                                    <!-- Timeline image markers will appear here -->
+                                </div>
+                            </div>
+                            <div class="control-buttons">
+                                <button class="ctrl-btn" id="playBtn"><i class="fas fa-play"></i></button>
+                                <button class="ctrl-btn" id="pauseBtn"><i class="fas fa-pause"></i></button>
+                                <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+                                <button class="download-btn" id="downloadBtn">
+                                    <i class="fas fa-download"></i> Download Video
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="segments-panel">
+                        <h3><i class="fas fa-list-ol"></i> Narration Segments</h3>
+                        <div class="segments-list" id="segmentsList">
+                            <!-- Narration segments will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>AI Video Editor • Automatically syncs voice with relevant images • Max 2-hour video length</p>
+            <p class="features">
+                <span><i class="fas fa-check-circle"></i> Logical segmentation</span>
+                <span><i class="fas fa-check-circle"></i> Emotion detection</span>
+                <span><i class="fas fa-check-circle"></i> Visual continuity</span>
+                <span><i class="fas fa-check-circle"></i> 16:9 cinematic ratio</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // JavaScript will be added here
+    </script>
+</body>
+</html>
